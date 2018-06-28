@@ -6,6 +6,9 @@ import { BrowserRouter } from 'react-router-dom';
 import {Provider} from "mobx-react"
 import AppState from './store/app-state';
 
+// import {MuiThemeProvider, createMuiTheme, lightBlue, pink} from "material-ui"
+// console.log(MuiThemeProvider, createMuiTheme, lightBlue, pink)
+
 const initialState = window.__INITIAL_STATE__ ? JSON.parse(window.__INITIAL_STATE__) : {};
 // const initialState = window.__INITIAL_STATE__ || {};
 ReactDOM.render(
