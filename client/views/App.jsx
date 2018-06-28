@@ -1,4 +1,4 @@
-import React,{Component, ReactFragment} from "react"
+import React,{Component} from "react"
 import {Link} from "react-router-dom"
 import Routes from "../config/router"
 
