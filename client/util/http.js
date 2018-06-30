@@ -11,7 +11,6 @@ const parseUrl = (url,params) => {
 export const get = (url, params)=>{
   return new Promise((resolve, reject)=>{
     axios.get(parseUrl(url, params)).then(resp=>{
-      console.log('resp', resp);
       const data = resp.data;
       if(data && data.success) {
         resolve(data);
@@ -25,7 +24,6 @@ export const get = (url, params)=>{
 export const post = (url, params, data)=>{
   return new Promise((resolve, reject)=>{
     axios.post(parseUrl(url, params),data).then(resp=>{
-      console.log('resp', resp);
       const data = resp.data;
       if(data && data.success) {
         resolve(data);

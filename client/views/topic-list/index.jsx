@@ -6,8 +6,10 @@ import Button from "material-ui/Button"
 import Tabs, {Tab} from "material-ui/Tabs"
 import List from "material-ui/List"
 import CircularProgress from 'material-ui/Progress/CircularProgress'
+import queryString from 'query-string'
 import Contaier from '../layout/container'
 import TopicListItem from "./list-item"
+import {tabs} from '../../util/variable-define'
 
 @inject(stores=>{
   return {
@@ -17,22 +19,34 @@ import TopicListItem from "./list-item"
 })
 @observer
 export default class TopicList extends Component{
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
   constructor() {
     super();
-    this.state = {
-      tabIndex:0
-    }
     this.changeTab = this.changeTab.bind(this);
     this.listItemClick = this.listItemClick.bind(this);
   }
 
   static propTypes = {
     appState: PropTypes.object.isRequired,
-    topicStore: PropTypes.object.isRequired
+    topicStore: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
   }
 
   componentDidMount() {
-    this.props.topicStore.fetchTopics();
+    const tab = this.getTab();
+    this.props.topicStore.fetchTopics(tab);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // console.log('oldSearch',this.props.location.search);
+    // console.log('newSearch',nextProps.location.search);
+    console.log(nextProps, this.props);
+    if(nextProps.location.search !== this.props.location.search) {
+      this.props.topicStore.fetchTopics(this.getTab(nextProps.location.search))
+    }
   }
 
   asyncBootstrap() {
@@ -44,10 +58,17 @@ export default class TopicList extends Component{
     })
   }
 
-  changeTab(e, index) {
-    this.setState({
-      tabIndex: index
-    });
+  getTab(search) {
+    search = search || this.props.location.search
+    const query = queryString.parse(search)
+    return query.tab || 'all'
+  }
+
+  changeTab(e, value) {
+    this.context.router.history.push({
+      pathname: '/index',
+      search: `?tab=${value}`
+    })
   }
 
   listItemClick() {
@@ -55,32 +76,24 @@ export default class TopicList extends Component{
   }
 
   render() {
-    const { tabIndex} = this.state;
     const { topicStore } = this.props;
 
     const topicList = topicStore.topics
     const syncTopics = topicStore.sync
-    /* const topic = {
-      tab: 'share',
-      title: 'This is title',
-      username:'gudp',
-      reply_count: 20,
-      visit_count:30,
-      create_at:'2018-06-20'
-    } */
+    const tab = this.getTab();
+
     return (
       <Contaier>
         <Helmet>
           <title>This is topic list</title>
           <meta name="list" content="this is list" />
         </Helmet>
-        <Tabs value={tabIndex} onChange={this.changeTab}>
-          <Tab label="全部"></Tab>
-          <Tab label="分享"></Tab>
-          <Tab label="工作"></Tab>
-          <Tab label="问答"></Tab>
-          <Tab label="精品"></Tab>
-          <Tab label="测试"></Tab>
+        <Tabs value={tab} onChange={this.changeTab}>
+          {
+            Object.keys(tabs).map((_tab)=>(
+              <Tab label={tabs[_tab]} value={_tab} key={_tab}/>
+            ))
+          }
         </Tabs>
         <List>
           {
@@ -90,7 +103,15 @@ export default class TopicList extends Component{
           }
         </List>
         {
-          syncTopics ? <CircularProgress color='primary' size={100}/> : null
+          syncTopics ?
+          <div style={{
+            display:'flex',
+            justifyContent:'space-around',
+            padding: '40px 0'
+          }}>
+            <CircularProgress color='primary' size={100}/>
+          </div>
+          : null
         }
       </Contaier>
     );

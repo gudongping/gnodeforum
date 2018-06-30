@@ -24,13 +24,16 @@ export default class TopicStore {
 
   addTopic(topic) {
     this.topics.push(new Topic(createTopic(topic)))
+    // console.log('push ...');
   }
 
-  @action fetchTopics() {
+  @action fetchTopics(tab) {
     return new Promise((resolve, reject)=>{
-      this.sync = true
+      this.sync = true;
+      this.topics = [];
       get('/topics', {
-        mdrender: false
+        mdrender: false,
+        tab: tab
       }).then(resp=>{
         if(resp.success) {
           resp.data.forEach(topic => {

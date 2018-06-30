@@ -6,8 +6,8 @@ import TestApi from "../views/test/api-test"
 
 export default () => (
   <div>
-    <Route path="/" exact render={()=><Redirect to="/list" />} />
-    <Route path="/list" component={TopicList} />
+    <Route path="/" exact render={()=><Redirect to="/index" />} />
+    <Route path="/index" component={TopicList} />
     <Route path="/detail" component={TopicDetail} />
     <Route path="/test" component={TestApi} />
   </div>
