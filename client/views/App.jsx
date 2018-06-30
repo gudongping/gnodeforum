@@ -1,14 +1,13 @@
 import React,{Component} from "react"
 import {Link} from "react-router-dom"
 import Routes from "../config/router"
+import AppBar from "./layout/app-bar"
 
 export default class App extends Component {
   render() {
     return (
       <div>
-        <Link to="/">首页</Link>
-        <br/>
-        <Link to="/detail">详情页</Link>
+        <AppBar/>
         <Routes />
       </div>
     )

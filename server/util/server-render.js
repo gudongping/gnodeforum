@@ -11,7 +11,7 @@ const colors = require('material-ui/colors')
 
 const getStoreState = (stores) => {
   return Object.keys(stores).reduce((result,storeName)=>{
-    result[storeName] = stores[storeName].toJson()
+    result[storeName] = stores[storeName]
     return result;
   },{})
 }
@@ -27,9 +27,8 @@ module.exports = (bundle, template, req, res) => {
     const sheetsRegistry = new SheetsRegistry();
     const theme = createMuiTheme({
       palette: {
-        primary: colors.lightBlue,
-        accent: colors.pink,
-        type:'light'
+        primary: colors.pink,
+        accent: colors.lightBlue
       }
     })
     const generateClassName = createGenerateClassName();

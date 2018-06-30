@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   target: "node",
@@ -23,5 +24,8 @@ module.exports = {
     extensions: ['.js','.jsx']
   },
   plugins: [
+    new webpack.DefinePlugin({
+      "process.env.API_BASE": '"http://127.0.0.1:3000"'
+    })
   ]
 }
