@@ -1,6 +1,8 @@
+import React from 'react'
 import Avatar from 'material-ui/Avatar'
 import PropTypes from 'prop-types'
 import {withStyles} from 'material-ui/styles'
+import dateFormat from 'dateformat'
 import {replyStyle} from './styles'
 import marked from 'marked'
 
@@ -11,14 +13,14 @@ const Reply = ({reply, classes}) => {
         <Avatar src={reply.author.avatar_url} />
       </div>
       <div className={classes.right}>
-        <span>{`${reply.author.loginname}  ${reply.create_at}`}</span>
-        <p dangeroulySetInnerHTML={{__html:marked(reply.content)}}></p>
+        <span>{`${reply.author.loginname}  ${dateFormat(reply.create_at,'yyyy-mm-dd hh:MM:ss')}`}</span>
+        <p dangerouslySetInnerHTML={{__html:marked(reply.content)}}></p>
       </div>
     </div>
   )
 }
 
-Reply.protoTypes = {
+Reply.propTypes = {
   reply: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired
 }

@@ -8,7 +8,7 @@ import Paper from 'material-ui/Paper'
 import CircularProgress from 'material-ui/Progress/CircularProgress'
 import Container from '../layout/container'
 import {topicDetailStyle} from './styles'
-import {Reply} from './reply'
+import Reply from './reply'
 
 @inject(stores=>({
   topicStore: stores.topicStore
@@ -33,7 +33,6 @@ export class TopicDetail extends Component{
     const {classes} = this.props
     const id = this.getTopicId();
     const topic = this.props.topicStore.detailMap[id]
-    console.log('topic', topic);
     if(!topic) {
       return (
         <Container>
