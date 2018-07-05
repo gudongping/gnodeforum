@@ -14,6 +14,7 @@ const Primary = ({classes, topic})=>{
     [classes.tab]:true,
     [classes.top]:topic.top
   })
+
   return (
     <div className={classes.root}>
       <span className={classNames}>{topic.top?'置顶':tabs[topic.tab]}</span>

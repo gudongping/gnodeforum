@@ -37,6 +37,7 @@ export default class TopicList extends Component{
 
   componentDidMount() {
     const tab = this.getTab();
+    console.log('******************************>tab', tab);
     this.props.topicStore.fetchTopics(tab);
   }
 
@@ -71,8 +72,8 @@ export default class TopicList extends Component{
     })
   }
 
-  listItemClick() {
-
+  listItemClick(topic) {
+    this.context.router.history.push(`/detail/${topic.id}`)
   }
 
   render() {
@@ -98,7 +99,10 @@ export default class TopicList extends Component{
         <List>
           {
             topicList.map((topic)=>{
-              return <TopicListItem onClick={this.listItemClick} topic={topic} key={topic.id}/>
+              return <TopicListItem
+              onClick={()=>this.listItemClick(topic)}
+              topic={topic}
+              key={topic.id}/>
             })
           }
         </List>

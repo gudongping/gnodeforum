@@ -31,6 +31,7 @@ module.exports = (bundle, template, req, res) => {
         accent: colors.lightBlue
       }
     })
+
     const generateClassName = createGenerateClassName();
     const app = createApp(stores,routerContext,sheetsRegistry, generateClassName, theme, req.url)
 
