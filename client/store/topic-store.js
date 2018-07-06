@@ -1,4 +1,4 @@
-import {observable, toJs, computed, action, extendObservable} from 'mobx'
+import {observable, computed, action, extendObservable} from 'mobx'
 import { topicSchema } from './../util/variable-define';
 import { get } from '../util/http'
 

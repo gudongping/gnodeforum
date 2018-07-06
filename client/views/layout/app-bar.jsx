@@ -8,6 +8,7 @@ import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import IconButton from 'material-ui/IconButton'
 import HomeIcon from 'material-ui-icons/Home'
+import {inject, observer} from 'mobx-react'
 
 const styles = theme => ({
   root: {
@@ -18,7 +19,15 @@ const styles = theme => ({
   }
 })
 
+@inject(stores=>({
+  appState: stores.appState
+}))
+@observer
 class MainAppBar extends Component {
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
   constructor() {
     super();
     this.onHomeIconClick = this.onHomeIconClick.bind(this);
@@ -27,7 +36,7 @@ class MainAppBar extends Component {
   }
 
   onHomeIconClick() {
-
+    this.context.router.history.push('/index?tab=all');
   }
 
   createButtonClick() {
@@ -35,11 +44,16 @@ class MainAppBar extends Component {
   }
 
   loginButtonClick() {
-
+    if(this.props.appState.user.isLogin) {
+      this.context.router.history.push('/user/info');
+    } else {
+      this.context.router.history.push('/user/login');
+    }
   }
 
   render() {
     const {classes} = this.props
+    const {user} = this.props.appState
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -54,7 +68,7 @@ class MainAppBar extends Component {
               新建话题
             </Button>
             <Button color="inherit" onClick={this.loginButtonClick}>
-              登录
+              {user.isLogin ? user.info.loginname : '登录'}
             </Button>
           </ToolBar>
         </AppBar>
