@@ -9,6 +9,7 @@ import CircularProgress from 'material-ui/Progress/CircularProgress'
 import Container from '../layout/container'
 import {topicDetailStyle} from './styles'
 import Reply from './reply'
+import dateFormat from 'dateformat'
 
 @inject(stores=>({
   topicStore: stores.topicStore
@@ -37,7 +38,7 @@ export class TopicDetail extends Component{
       return (
         <Container>
           <section className={classes.loadingContainer}>
-            <CircularProgress color="primary" />
+            <CircularProgress color="primary" size={100} />
           </section>
         </Container>
       )
@@ -56,8 +57,8 @@ export class TopicDetail extends Component{
           </section>
           <Paper elevation={4} className={classes.replies}>
             <header className={classes.replyHeader}>
-              <span>{`${topic.reply_count}回复`}</span>
-              <span>{`最新回复 ${topic.last_reply_at}`}</span>
+              <span>{`${topic.reply_count} 回复`}</span>
+              <span>{`最新回复 ${dateFormat(topic.last_reply_at,'yyyy-mm-dd hh:MM:ss')}`}</span>
             </header>
             <section>
               {

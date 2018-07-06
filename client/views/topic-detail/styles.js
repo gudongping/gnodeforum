@@ -1,4 +1,4 @@
-export const topicDetail = (theme) => {
+export const topicDetailStyle = (theme) => {
   return {
     header: {
       padding: 20,
@@ -60,6 +60,11 @@ export const topicDetail = (theme) => {
       right: 40,
       bottom: 65,
       zIndex: 101
+    },
+    loadingContainer: {
+      display:'flex',
+      justifyContent:'space-around',
+      padding: '40px 0'
     }
   }
 }
