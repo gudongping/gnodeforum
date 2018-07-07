@@ -68,7 +68,7 @@ class MainAppBar extends Component {
               新建话题
             </Button>
             <Button color="inherit" onClick={this.loginButtonClick}>
-              {user.isLogin ? user.info.loginname : '登录'}
+              {user.isLogin ? `${user.info.loginname}` : '登录'}
             </Button>
           </ToolBar>
         </AppBar>
