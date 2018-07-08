@@ -77,8 +77,8 @@ export default class TopicList extends Component{
   }
 
   render() {
-    const { topicStore } = this.props;
-
+    const { topicStore, appState } = this.props
+    const {createdTopics} = topicStore
     const topicList = topicStore.topics
     const syncTopics = topicStore.sync
     const tab = this.getTab();
@@ -96,6 +96,24 @@ export default class TopicList extends Component{
             ))
           }
         </Tabs>
+        {
+          createdTopics.length > 0 ?
+          (<List style={{backgroundColor: '#dfdfdf'}}>
+            {
+              createdTopics.map(topic=>{
+                topic = Object.assign({}, topic, {
+                  author: appState.user.info
+                })
+                return (
+                  <TopicListItem
+                    onClick={()=>this.listItemClick(topic)}
+                    topic={topic}
+                    key={topic.id}
+                  />
+              )})
+            }
+          </List>): null
+        }
         <List>
           {
             topicList.map((topic)=>{

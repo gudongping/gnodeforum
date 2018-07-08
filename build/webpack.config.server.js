@@ -18,6 +18,14 @@ module.exports = {
       test:/\.(jsx|js)$/,
       loader:'babel-loader',
       exclude:/node_modules/
+    },
+    {
+      test:/\.(png|jpg|gif|svg)$/,
+      loader:'url-loader',
+      options: {
+        limit: 5000,
+        name: '[name].[hash:8].[ext]'
+      }
     }]
   },
   resolve: {

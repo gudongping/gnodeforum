@@ -56,7 +56,7 @@ export const topicDetailStyle = (theme) => {
       }
     },
     replyButton: {
-      positon: 'absolute',
+      position: 'absolute',
       right: 40,
       bottom: 65,
       zIndex: 101

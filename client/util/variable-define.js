@@ -26,3 +26,16 @@ export const tabs = {
   good: '精品',
   dev: '测试'
 }
+
+export const replySchema = {
+  id: '',
+  author: {
+    loginname: '',
+    avatar_url: ''
+  },
+  content: '',
+  ups:[],
+  create_at: '',
+  reply_id: null,
+  is_uped: false
+}
