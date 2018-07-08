@@ -33,11 +33,11 @@ protectedRoute.defaultProps = {
   isLogin: false
 }
 
-const InjectedProtectedRoute = inject(stores=>{
+const InjectedProtectedRoute = withRouter(inject(stores=>{
   return {
     isLogin: stores.appState.user.isLogin
   }
-})(observer(protectedRoute))
+})(observer(protectedRoute)))
 
 export default () => (
   <div>
