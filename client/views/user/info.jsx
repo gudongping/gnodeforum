@@ -12,6 +12,7 @@ import Avatar from "material-ui/Avatar"
 import Typography from 'material-ui/Typography'
 import UserWrapper from './user'
 import infoStyles from './styles/user-info-style'
+import dateFormat from 'dateformat'
 
 const TopicItem = ({topic, onClick}) => {
   return (
@@ -19,7 +20,7 @@ const TopicItem = ({topic, onClick}) => {
       <Avatar src={topic.author.avatar_url} />
       <ListItemText
         primary={topic.title}
-        secondary={`最新回复：${topic.last_reply_at}`}
+        secondary={`最新回复：${dateFormat(topic.last_reply_at,'yyyy-mm-dd hh:MM:ss')}`}
       />
     </ListItem>
   )
@@ -39,12 +40,8 @@ class UserInfo extends Component {
   }
 
   componentWillMount() {
-    if(!this.props.user.isLogin) {
-      this.context.router.history.replace('/user/login')
-    } else {
-      this.props.appState.getUserDetail()
-      this.props.appState.getUserCollections()
-    }
+    this.props.appState.getUserDetail()
+    this.props.appState.getUserCollections()
   }
 
   goToTopic(id) {
