@@ -30,8 +30,8 @@ TopicItem.propTypes = {
 }
 
 @inject(stores=>({
-  user: stores.appState.user,
-  appState: stores.appState
+  appState: stores.appState,
+  user: stores.appState.user
 }))
 @observer
 class UserInfo extends Component {
@@ -40,8 +40,12 @@ class UserInfo extends Component {
   }
 
   componentWillMount() {
-    this.props.appState.getUserDetail()
-    this.props.appState.getUserCollections()
+    if(!this.props.user.isLogin) {
+      this.context.router.history.replace('/user/login')
+    } else {
+      this.props.appState.getUserDetail()
+      this.props.appState.getUserCollections()
+    }
   }
 
   goToTopic(id) {

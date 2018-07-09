@@ -9,35 +9,43 @@ import TestApi from "../views/test/api-test"
 import {inject, observer} from 'mobx-react'
 import PropTypes from 'prop-types'
 
-const protectedRoute = ({isLogin, component: Compoent, ...rest })=>(
-  <Route
-    {...rest}
-    render = {
-      (props) =>
-      isLogin ?
-      <Compoent {...props}/> :
-      <Redirect to={{
-        pathname:'/user/login',
-        search: `?from=${rest.path}`
-      }} />
-    }
-  />
-)
+const ProtectedRoute = ({isLogin, user, component: Component, ...rest })=> {
+  // console.log('isLogin', isLogin);
+  // console.log('user', user)
+  // console.log('user.info', user.info)
+  return (
+    <Route
+      {...rest}
+      render = {
+        (props) =>
+        isLogin ?
+        <Component {...props}/> :
+        <Redirect to={{
+          pathname:'/user/login',
+          search: `?from=${rest.path}`
+        }}/>
+      }
+    />
+  )
+}
 
-protectedRoute.propTypes = {
-  isLogin: PropTypes.bool.isRequired,
+
+ProtectedRoute.propTypes = {
+  isLogin: PropTypes.bool,
   component: PropTypes.func.isRequired
 }
 
-protectedRoute.defaultProps = {
+ProtectedRoute.defaultProps = {
   isLogin: false
 }
 
 const InjectedProtectedRoute = withRouter(inject(stores=>{
   return {
-    isLogin: stores.appState.user.isLogin
+    isLogin: stores.appState.user.isLogin,
+    appState: stores.appState,
+    user: stores.appState.user
   }
-})(observer(protectedRoute)))
+})(observer(ProtectedRoute)))
 
 export default () => (
   <div>

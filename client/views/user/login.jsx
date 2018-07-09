@@ -6,7 +6,6 @@ import Button from "material-ui/Button"
 import {withStyles} from 'material-ui/styles'
 import UserWrapper from './user'
 import loginStyles from './styles/login-style'
-import {Redirect} from 'react-router-dom'
 import queryString from 'query-string'
 
 // 讲暴露的内容放到props中
@@ -66,7 +65,8 @@ class UserLogin extends Component {
     })
     return this.props.appState.login(this.state.accesstoken)
       .then(()=>{
-        // this.context.router.history.replace('/user/info');
+        const from = this.getFrom(this.props.location)
+        this.context.router.history.replace(from);
       })
       .catch(error=>{
         console.log(error)
@@ -75,11 +75,6 @@ class UserLogin extends Component {
 
   render() {
     const {classes} = this.props
-    const from = this.getFrom();
-    const isLogin = this.props.user.isLogin
-    if(isLogin) {
-      return <Redirect to={from} />
-    }
     return (
       <UserWrapper>
         <div className={classes.root}>
