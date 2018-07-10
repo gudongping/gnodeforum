@@ -1,4 +1,4 @@
-import {observable, computed, action, extendObservable} from 'mobx'
+import {observable, computed, action, extendObservable, toJS} from 'mobx'
 import { topicSchema, replySchema } from './../util/variable-define';
 import { get, post } from '../util/http'
 
@@ -70,6 +70,8 @@ export default class TopicStore {
         mdrender: false,
         tab: tab
       }).then(resp=>{
+        console.log('**********************************************************************');
+        console.log(resp.data);
         if(resp.success) {
           this.topics = resp.data.map(topic => {
             return new Topic(createTopic(topic))
@@ -80,6 +82,7 @@ export default class TopicStore {
         }
         this.sync = false
       }). catch(err=>{
+        console.log('......................................err',err)
         reject(err);
         this.sync = false;
       })
@@ -128,5 +131,13 @@ export default class TopicStore {
         }
       }).then(reject)
     })
+  }
+
+  toJson() {
+    return {
+      topics: toJS(this.topics),
+      sync: this.sync,
+      details: toJS(this.details)
+    }
   }
 }

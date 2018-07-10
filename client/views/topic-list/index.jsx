@@ -51,11 +51,11 @@ export default class TopicList extends Component{
   }
 
   asyncBootstrap() {
+    const query = queryString.parse(this.props.location.search)
+    const tab = query.tab || 'all'
     return new Promise(resolve=>{
-      setTimeout(()=>{
-        this.props.appState.count = 3
-        resolve(true)
-      });
+      this.props.topicStore.fetchTopics(tab)
+      resolve(true)
     })
   }
 

@@ -11,7 +11,7 @@ const colors = require('material-ui/colors')
 
 const getStoreState = (stores) => {
   return Object.keys(stores).reduce((result,storeName)=>{
-    result[storeName] = stores[storeName]
+    result[storeName] = stores[storeName].toJson()
     return result;
   },{})
 }

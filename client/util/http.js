@@ -5,6 +5,7 @@ const parseUrl = (url,params) => {
   const str = Object.keys(params).reduce((result, key)=>{
     return result += `${key}=${params[key]}&`
   }, '')
+  console.log('**********url',`${baseUrl}/api${url}?${str.substr(0,str.length-1)}`);
   return `${baseUrl}/api${url}?${str.substr(0,str.length-1)}`
 }
 

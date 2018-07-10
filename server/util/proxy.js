@@ -8,6 +8,7 @@ module.exports = function(req,res,next) {
   const needAccessToken = req.query.needAccessToken;
   console.log('==>path', path, req.method);
   console.log('==>user', user);
+  console.log('==>needAccessToken', needAccessToken);
 
   if(needAccessToken && !user.accessToken) {
     res.status(401).send({

@@ -1,4 +1,4 @@
-import {observable, computed, autorun, action} from "mobx"
+import {observable, computed, toJS, action} from "mobx"
 
 import {post, get} from '../util/http'
 
@@ -70,5 +70,11 @@ export default class AppState {
           reject(err)
         })
     })
+  }
+
+  toJson() {
+    return {
+      user: toJS(this.user)
+    }
   }
 }
