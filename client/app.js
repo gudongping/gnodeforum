@@ -16,8 +16,8 @@ const theme = createMuiTheme({
   }
 })
 
-const initialState = window.__INITIAL_STATE__ ? JSON.parse(window.__INITIAL_STATE__) : {};
-// const initialState = window.__INITIAL_STATE__ || {};
+// const initialState = window.__INITIAL_STATE__ ? JSON.parse(window.__INITIAL_STATE__) : {};
+const initialState = window.__INITIAL_STATE__ || {};
 
 
 const createApp = (TheApp)=> {

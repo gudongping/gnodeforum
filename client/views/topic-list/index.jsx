@@ -36,26 +36,28 @@ export default class TopicList extends Component{
   }
 
   componentDidMount() {
-    const tab = this.getTab();
-    console.log('******************************>tab', tab);
-    this.props.topicStore.fetchTopics(tab);
+    // const tab = this.getTab();
+    // this.props.topicStore.fetchTopics(tab);
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log('oldSearch',this.props.location.search);
-    // console.log('newSearch',nextProps.location.search);
     console.log(nextProps, this.props);
     if(nextProps.location.search !== this.props.location.search) {
-      this.props.topicStore.fetchTopics(this.getTab(nextProps.location.search))
+      // this.props.topicStore.fetchTopics(this.getTab(nextProps.location.search))
     }
   }
 
   asyncBootstrap() {
     const query = queryString.parse(this.props.location.search)
     const tab = query.tab || 'all'
-    return new Promise(resolve=>{
+    return new Promise((resolve, reject)=>{
       this.props.topicStore.fetchTopics(tab)
-      resolve(true)
+        .then(()=>{
+          resolve(true)
+        }).catch(()=>{
+          reject(false)
+        })
+
     })
   }
 

@@ -1,11 +1,11 @@
 import axios from "axios"
-const baseUrl = process.env.Api_BASE || '';
+const baseUrl = process.env.API_BASE || '';
 
 const parseUrl = (url,params) => {
   const str = Object.keys(params).reduce((result, key)=>{
     return result += `${key}=${params[key]}&`
   }, '')
-  console.log('**********url',`${baseUrl}/api${url}?${str.substr(0,str.length-1)}`);
+  console.log('==>url',`${baseUrl}/api${url}?${str.substr(0,str.length-1)}`);
   return `${baseUrl}/api${url}?${str.substr(0,str.length-1)}`
 }
 

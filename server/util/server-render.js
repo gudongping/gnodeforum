@@ -45,9 +45,9 @@ module.exports = (bundle, template, req, res) => {
       const helmet = Helmet.rewind();
       const appString = ReactDomServer.renderToString(app);
       const state = getStoreState(stores)
-      console.log('===>state', state);
-      console.log('===>appString', appString);
-      console.log('===>routerContext',routerContext);
+      console.log('***state', state);
+      console.log('***appString', appString);
+      console.log('***routerContext',routerContext);
       // res.send(template.replace('<!-- app -->',appString));
       const html = ejs.render(template, {
         appString: appString,

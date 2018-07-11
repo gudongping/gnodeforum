@@ -52,7 +52,6 @@ export default class TopicStore {
 
   addTopic(topic) {
     this.topics.push(new Topic(createTopic(topic)))
-    // console.log('push ...');
   }
 
   @computed get detailMap() {
@@ -70,8 +69,6 @@ export default class TopicStore {
         mdrender: false,
         tab: tab
       }).then(resp=>{
-        console.log('**********************************************************************');
-        console.log(resp.data);
         if(resp.success) {
           this.topics = resp.data.map(topic => {
             return new Topic(createTopic(topic))
