@@ -41,13 +41,15 @@ class Topic {
 export default class TopicStore {
   @observable topics
   @observable details
-  @observable sync
+  @observable sync = false
   @observable createdTopics = [];
+  @observable tab
 
-  constructor({sync = false,topics=[], details=[]} = {}) {
+  constructor({sync = false,topics=[], details=[], tab=null} = {}) {
     this.sync = sync;
     this.topics = topics.map(topic=>new Topic(createTopic(topic)));
     this.details = details.map(topic=>new Topic(createTopic(topic)));
+    this.tab = tab;
   }
 
   addTopic(topic) {
@@ -62,27 +64,33 @@ export default class TopicStore {
   }
 
   @action fetchTopics(tab) {
+
     return new Promise((resolve, reject)=>{
-      this.sync = true;
-      this.topics = [];
-      get('/topics', {
-        mdrender: false,
-        tab: tab
-      }).then(resp=>{
-        if(resp.success) {
-          this.topics = resp.data.map(topic => {
-            return new Topic(createTopic(topic))
-          });
-          resolve()
-        } else {
-          reject()
-        }
-        this.sync = false
-      }). catch(err=>{
-        console.log('......................................err',err)
-        reject(err);
-        this.sync = false;
-      })
+      if(tab === this.tab) {
+        resolve();
+      } else {
+        this.tab = tab;
+        this.sync = true;
+        this.topics = [];
+        get('/topics', {
+          mdrender: false,
+          tab: tab
+        }).then(resp=>{
+          if(resp.success) {
+            this.topics = resp.data.map(topic => {
+              return new Topic(createTopic(topic))
+            });
+            resolve()
+          } else {
+            reject()
+          }
+          this.sync = false
+        }). catch(err=>{
+          console.log('......................................err',err)
+          reject(err);
+          this.sync = false;
+        })
+      }
     });
   }
 
@@ -134,7 +142,8 @@ export default class TopicStore {
     return {
       topics: toJS(this.topics),
       sync: this.sync,
-      details: toJS(this.details)
+      details: toJS(this.details),
+      tab: this.tab
     }
   }
 }

@@ -10,6 +10,7 @@ const createGenerateClassName = require('material-ui/styles/createGenerateClassN
 const colors = require('material-ui/colors')
 
 const getStoreState = (stores) => {
+  console.log('----------------stores',stores)
   return Object.keys(stores).reduce((result,storeName)=>{
     result[storeName] = stores[storeName].toJson()
     return result;
@@ -18,11 +19,16 @@ const getStoreState = (stores) => {
 
 module.exports = (bundle, template, req, res) => {
   return new Promise((resolve, reject)=>{
+    const user = req.session.user
     const createStoreMap = bundle.createStoreMap
     const createApp = bundle.default
-
     const routerContext = {}
     const stores = createStoreMap()
+
+    if(user) {
+      stores.appState.user.isLogin = true;
+      stores.appState.user.info = user
+    }
 
     const sheetsRegistry = new SheetsRegistry();
     const theme = createMuiTheme({
@@ -51,7 +57,7 @@ module.exports = (bundle, template, req, res) => {
       // res.send(template.replace('<!-- app -->',appString));
       const html = ejs.render(template, {
         appString: appString,
-        // initialState: JSON.stringify(state)
+        // initialState: JSON.stringify(state),
         initialState: serialize(state),
         meta: helmet.meta.toString(),
         title: helmet.title.toString(),

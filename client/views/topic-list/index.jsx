@@ -36,14 +36,14 @@ export default class TopicList extends Component{
   }
 
   componentDidMount() {
-    // const tab = this.getTab();
-    // this.props.topicStore.fetchTopics(tab);
+    const tab = this.getTab();
+    this.props.topicStore.fetchTopics(tab);
   }
 
   componentWillReceiveProps(nextProps) {
     console.log(nextProps, this.props);
     if(nextProps.location.search !== this.props.location.search) {
-      // this.props.topicStore.fetchTopics(this.getTab(nextProps.location.search))
+      this.props.topicStore.fetchTopics(this.getTab(nextProps.location.search))
     }
   }
 
